@@ -1,20 +1,24 @@
 const express = require('express')
 const router = express.Router()
-const path = require('path')
 
-const controllers = path.resolve('../../controllers/contacts/index.js')
-const validation = path.resolve('../../middlewares/validation/validationContacts.js')
-const authorizationPath = path.resolve('../../middlewares/authorization/authorization.js')
+const {
+  getContacts,
+  getById,
+  postContact,
+  patchContactById,
+  deleteContact,
+  patchContactStatus
+} = require('../../controllers/contacts/index.js')
 
-const controllsContacts = require(controllers)
-const validationPath = require(validation)
-const { authorization } = require(authorizationPath)
+const { addValidation, patchContactValidation } = require('../../middlewares/validation/index.js')
 
-router.get('/', authorization, controllsContacts.getContacts)
-router.get('/:contactId', authorization, controllsContacts.getById)
-router.post('/', authorization, validationPath.addValidation, controllsContacts.postContact)
-router.patch('/:contactId', authorization, validationPath.patchContactValidation, controllsContacts.patchContactById)
-router.patch('/:contactId/favorite', authorization, validationPath.patchContactValidation, controllsContacts.patchContactFavorite)
-router.delete('/:contactId', authorization, controllsContacts.deleteContact)
+const { authorization } = require('../../middlewares/authorization/authorization.js')
+
+router.get('/', authorization, getContacts)
+router.get('/:contactId', authorization, getById)
+router.post('/', authorization, addValidation, postContact)
+router.patch('/:contactId', authorization, patchContactValidation, patchContactById)
+router.patch('/:contactId/favorite', authorization, patchContactValidation, patchContactStatus)
+router.delete('/:contactId', authorization, deleteContact)
 
 module.exports = router
