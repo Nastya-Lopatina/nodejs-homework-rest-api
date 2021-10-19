@@ -1,5 +1,5 @@
 
-const { updateStatusContact } = require('../../model/contacts')
+const { updateStatusContact } = require('../../model/contacts/index.js')
 
 const patchContactStatus = async (req, res, next) => {
   try {

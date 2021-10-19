@@ -1,10 +1,9 @@
-const fs = require('fs/promises')
-const path = require('path')
-const contactsPath = path.resolve('../../db/contacts.json')
+const { Contact } = require('../../db/contactModel')
 
-const getListContacts = async () => {
-  const contacts = await fs.readFile(contactsPath, 'utf-8')
-  return JSON.parse(contacts)
+const getListContacts = async ({ id, page, limit }) => {
+  const skip = (page - 1) * limit
+  const contacts = await Contact.find({ owner: id }, '_id content owner', { skip, limit: +limit })
+  return contacts
 }
 
 module.exports = { getListContacts }
