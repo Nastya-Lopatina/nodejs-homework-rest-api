@@ -1,6 +1,6 @@
 const Joi = require('joi')
-
 const signUpUser = (req, res, next) => {
+  console.log(req.body)
   const schema = Joi.object({
     password: Joi.string().required(),
     email: Joi.string().required(),
