@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 const { signUp, signIn, signOut, getUser } = require('../../controllers/users/index.js')
-const { signUpUser } = require('../../middlewares/validation/index.js')
+const { signUpUser } = require('../../middlewares/validation/validationUsers.js')
 const { authorization } = require('../../middlewares/authorization/authorization.js')
 
 // const {logout} = require('../../model/users/index')
