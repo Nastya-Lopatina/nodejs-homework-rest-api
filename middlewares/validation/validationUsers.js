@@ -6,7 +6,7 @@ const signUpSchema = Joi.object({
   subscriptions: Joi.string()
 })
 
-const signUp = async (req, res, next) => {
+const signUpUser = async (req, res, next) => {
   try {
     const { error } = signUpSchema.validate(req.body)
     if (error) {
@@ -20,5 +20,5 @@ const signUp = async (req, res, next) => {
 }
 
 module.exports = {
-  signUp
+  signUpUser
 }
