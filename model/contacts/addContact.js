@@ -1,21 +1,18 @@
-const fs = require('fs/promises')
-const path = require('path')
+const { Contact } = require('../../db/contactModel')
+const { User } = require('../../db/userMadel')
 
-const contactsPath = path.resolve('./db/contacts.json')
+const addContact = async ({ name, email, phone, favorite, user }) => {
+  await User.findById(user._id)
 
-const { getListContacts } = require('./getListContacts')
-
-const addContact = async ({ name, email, phone }) => {
-  const contacts = await getListContacts()
-  const createId = contacts.length + 1
-  const contact = {
-    createId,
+  const contact = new Contact({
     name,
     email,
     phone,
-  }
-  const newContactsList = [...contacts, contact]
-  await fs.writeFile(contactsPath, JSON.stringify(newContactsList), 'utf-8')
+    favorite,
+    owner: user._id
+  })
+  console.log(contact)
+  await contact.save()
   return contact
 }
 

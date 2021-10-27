@@ -3,6 +3,7 @@ const { Conflict } = require('http-errors')
 
 const signUp = async (req, res, next) => {
   try {
+    console.log(req.body)
     const newUser = await registration(req.body)
     if (!newUser) {
       throw new Conflict('Email in use')

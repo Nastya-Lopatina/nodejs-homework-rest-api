@@ -1,24 +1,22 @@
 const Joi = require('joi')
+const signUpUser = (req, res, next) => {
+  console.log(req.body)
+  const schema = Joi.object({
+    password: Joi.string().required(),
+    email: Joi.string().required(),
+    subscription: Joi.string().optional(),
+    token: Joi.string().optional()
+  })
 
-const signUpSchema = Joi.object({
-  email: Joi.string().required(),
-  password: Joi.string().required(),
-  subscriptions: Joi.string()
-})
+  const result = schema.validate(req.body)
 
-const signUp = async (req, res, next) => {
-  try {
-    const { error } = signUpSchema.validate(req.body)
-    if (error) {
-      res.status(400).json({ message: 'missing required fields' })
-      return
-    }
-    next()
-  } catch (error) {
-    next(error)
+  if (result.error) {
+    return res.status(400).json({ status: result.error.details })
   }
+
+  next()
 }
 
 module.exports = {
-  signUp
+  signUpUser
 }
