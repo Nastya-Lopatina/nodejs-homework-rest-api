@@ -1,19 +1,18 @@
 const app = require('../app')
 
-const { dbConnect } = require('../db/connection.js')
+const { dbConnect } = require('../db/connection')
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
+const MONGODB_URL = process.env.MONGODB_URL
 
-const start = async () => {
+async function start() {
   try {
-    await dbConnect()
+    await dbConnect(MONGODB_URL)
     app.listen(PORT, () => {
-      console.log('Database connection successful')
       console.log(`Server running. Use our API on port: ${PORT}`)
     })
   } catch (error) {
-    console.error(error.message)
-    process.exit(1)
+    console.log(error)
   }
 }
 
