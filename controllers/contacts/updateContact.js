@@ -1,4 +1,4 @@
-const { updateContact } = require('../../model/contacts/updateContact')
+const { updateContact } = require('../../model/contacts/index.js')
 
 const patchContactById = async (req, res, next) => {
   try {
