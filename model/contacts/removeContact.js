@@ -1,22 +1,7 @@
-const fs = require('fs/promises')
-const path = require('path')
-
-const contactsPath = path.resolve('../../db/contacts.json')
-const { getContactById } = require('./getContactById')
-const { getListContacts } = require('./getListContacts')
+const { Contact } = require('../../db/contactModel')
 
 const removeContact = async (contactId) => {
-  const contacts = await getListContacts()
-  const contact = await getContactById(contactId)
-
-  if (!contact) {
-    return undefined
-  }
-  const newContactsList = contacts.filter((item) => item.id !== Number(contactId))
-
-  await fs.writeFile(contactsPath, JSON.stringify(newContactsList), 'utf-8')
-
-  return contact
+  await Contact.findByIdAndRemove(contactId)
 }
 
 module.exports = { removeContact }
